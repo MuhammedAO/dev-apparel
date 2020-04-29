@@ -1,0 +1,10 @@
+
+type Mutation {
+  name: String!
+  email: String!
+}
+
+type Query {
+  name: String!
+  email: String!
+}
