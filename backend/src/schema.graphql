@@ -1,10 +1,14 @@
 
-type Mutation {
+type Cars {
   name: String!
-  email: String!
+  model:String!
 }
 
+
 type Query {
-  name: String!
-  email: String!
+ cars: [Cars]!
+}
+
+type Mutation {
+ createTesla(name: String!, model:String!) : Cars
 }
