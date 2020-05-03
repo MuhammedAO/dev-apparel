@@ -1,8 +1,11 @@
+const {forwardTo} = require('prisma-binding')
+
 const Query = {
-  cars: () => {
-    global.cars = global.cars || []
-    return global.cars
-  }
+  items: forwardTo('db')
+// items: async (parent,args, context, info) => {
+//   const items = await context.db.query().items()
+//   return items
+// }
 };
 
 module.exports = Query;
