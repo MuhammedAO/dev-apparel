@@ -1,14 +1,11 @@
 const mutations = {
-  createTesla: (parent, args) => {
-    global.cars = global.cars || []
-
-    const newCar = { name: args.name, model: args.model }
-    
-    global.cars.push(newCar)
-
-    return newCar
-    // console.log(args);
-
+  createItem: async (parent, args, context, info) => {
+    const item = await context.db.mutation().createItem({
+      data: {
+        ...args
+      }
+    }, info)
+    return item
   }
 };
 
