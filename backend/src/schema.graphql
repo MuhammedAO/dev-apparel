@@ -1,14 +1,11 @@
+# import * from './generated/prisma.graphql'
 
-type Cars {
-  name: String!
-  model:String!
+type Mutation {
+createItem(title:String description:String price:Int image:String largeImage: String): Item!
 }
 
 
 type Query {
- cars: [Cars]!
+ items: [Item]!
 }
 
-type Mutation {
- createTesla(name: String!, model:String!) : Cars
-}
