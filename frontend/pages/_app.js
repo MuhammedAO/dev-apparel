@@ -12,6 +12,7 @@ import withData from '../lib/withData'
 
 //getInitialProps enables server-side rendering in a page and allows you to do initial data population, 
 //it means sending the page with the data already populated from the server.
+//Also surfacing page values
 class MyApp extends App {
 
   static async getInitalProps({ Component, context }) {
@@ -38,4 +39,5 @@ class MyApp extends App {
   }
 }
 
+//withData exposes the client via props
 export default withData(MyApp);
