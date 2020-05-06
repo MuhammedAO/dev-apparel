@@ -1,6 +1,6 @@
-const mutations = {
-  createItem: async (parent, args, context, info) => {
-    const item = await context.db.mutation().createItem({
+const Mutations = {
+  async createItem (parent, args, context, info)  {
+    const item = await context.db.mutation.createItem({
       data: {
         ...args
       }
@@ -9,4 +9,4 @@ const mutations = {
   }
 };
 
-module.exports = mutations;
+module.exports = Mutations;
