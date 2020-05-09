@@ -20,10 +20,12 @@ background: white;
 color: ${props => props.theme.black};
 `
 
+//centralize page content only
 const Inner = styled.div`
 max-width: ${props => props.theme.maxWidth};
 margin: 0 auto;
 padding: 2rem;
+/* background: crimson; */
 `
 
 injectGlobal`
@@ -48,6 +50,7 @@ html{
    font-size: 1.5rem;
    line-height: 2;
    font-family:'radnika_next';
+   overflow-x: hidden;
  }
 
  a{

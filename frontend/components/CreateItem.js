@@ -71,7 +71,7 @@ class CreateItem extends Component {
   }
 
   render() {
-    const { title, description, price } = this.state
+    const { title, description, price, image } = this.state
     return (
       //expose create_item_muttation to this component via props
       //variable = when this mutation fires, it takes a copy of the state and send it along just like i mentioned up there
@@ -107,6 +107,8 @@ class CreateItem extends Component {
                   required
                   onChange={this.uploadFile}
                 />
+                {/*show selected image to user */}
+                {image && <img src={image} width="200" alt="Upload image"/> }
               </label>
               <label htmlFor="title">
                 Title

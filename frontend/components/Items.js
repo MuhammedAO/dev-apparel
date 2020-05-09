@@ -39,7 +39,7 @@ export default class Items extends Component {
       <Center>
         <Query query={ALL_ITEMS_QUERY}>
           {({ data, error, loading }) => {
-            // console.log(data)
+            // console.log(payload)
             loading ? <p>Loading...</p> : null
             if (error) return <p>Error: {error.message}</p>
             return (
@@ -55,3 +55,5 @@ export default class Items extends Component {
     )
   }
 }
+
+export {ALL_ITEMS_QUERY}
