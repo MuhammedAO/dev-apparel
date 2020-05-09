@@ -23,6 +23,14 @@ const Mutations = {
       info
     );
   },
+  async deleteItem (parent, args, ctx, info) {
+  const where = { id : args.id}
+  //1.find the item
+  const item = await ctx.db.query.item({where}, `{id title}` )
+  //2.check if they own the item/have permission to delete
+  //3/Delete item
+  return ctx.db.mutation.deleteItem({where}, info)
+  }
 };
 
 //the info param allows the query e.g updateItem to know exactly what to return e.g Item!..
