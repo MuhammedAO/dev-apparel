@@ -15,15 +15,18 @@ import withData from '../lib/withData'
 //Also surfacing page values
 class MyApp extends App {
 
-  static async getInitalProps({ Component, context }) {
+  static async getInitialProps({ Component, ctx }) {
+
     let pageProps = {}
-    if (Component.getInitalProps) {
-      pageProps = await Component.getInitalProps(context)
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx)
     }
     //exposes query to the user
-    pageProps.query = context.query
+    pageProps.query = ctx.query
     return { pageProps }
+
   }
+  
 
   render() {
     const { Component, apollo, pageProps } = this.props
