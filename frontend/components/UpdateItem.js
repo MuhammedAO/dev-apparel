@@ -104,7 +104,7 @@ class UpdateItem extends Component {
                         onChange={this.handleChange}
                       />
                     </label>
-                    <button type="submit">Sav {loading ? 'ivg' : 'e'} Changes</button>
+                    <button type="submit">Sav{loading ? 'ivg' : 'e'} Changes</button>
                   </fieldset>
                 </Form>
               )}
