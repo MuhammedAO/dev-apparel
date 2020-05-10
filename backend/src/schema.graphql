@@ -10,5 +10,6 @@ deleteItem(id: ID!): Item
 type Query {
  items: [Item]!
  item(where: ItemWhereUniqueInput!): Item #fetch single item and edit
+ itemsConnection(where: ItemWhereInput): ItemConnection! #returns the aggregate for pagination
 }
 
