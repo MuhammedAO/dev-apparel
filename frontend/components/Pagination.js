@@ -17,7 +17,7 @@ query PAGINATION_QUERY{
 }
 
 `
-
+// The prefetch link prop fetches a page before it is requested
 const Pagination = ({ page }) => {
   return (
     <Query query={PAGINATION_QUERY}>
