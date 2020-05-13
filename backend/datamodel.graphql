@@ -1,7 +1,28 @@
+# Schema for prisma
+# Amytime you make a change to this file you MUST to deploy it to prisma
+# Because we need to update the DB and  pull a new generated prisma Schema
+
+# enumeration types are a special kind of scalar that is restricted to a particular set of allowed values. 
+# This means that wherever we use the enum type Permission in our schema,
+# we expect it to be exactly one of ADMIN, USER, or ITEMCREATE. etc
+enum Permission{
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
+# permissions of the user is going to be based on the enum Permission
 type User {
   id: ID! @id
-  name: String!
-  email: String!
+  name: String! 
+  email: String! @unique
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission] @scalarList(strategy: RELATION)
 }
 
 type Item {
