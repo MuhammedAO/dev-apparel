@@ -1,6 +1,11 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const { randomBytes } = require('crypto')
+const { promisify } = require('util')
 
+//Crypto is a module in Node.js which deals with an algorithm that performs data encryption and decryption
+// randomBytes is used to generate a cryptographically well-built artificial random data and the number of bytes to be generated in the written code.
+//promisify => runs randomBytes asynchronously(promise based).
 
 const Mutations = {
   async createItem(parent, args, context, info) {
@@ -92,6 +97,29 @@ const Mutations = {
   signout(parent, args, ctx, info) {
     ctx.response.clearCookie('token')
     return { message: 'Goodbye!' }
+  },
+
+  async requestReset(parent, { email }, ctx, info) {
+    //check if this is a real user
+    const user = await ctx.db.query.user({ where: { email } })
+
+    if (!user) {
+      throw new Error(`No user found for ${email}`)
+    }
+    //set a reset token and expiry on that user
+    //randomBytes = random && unique token
+    const randomBytesPromisified = promisify(randomBytes)
+    const resetToken = (await randomBytesPromisified(20)).toString('hex')
+    const resetTokenExpiry = Date.now() + 3600000; //1 hour from now
+    //save to the user
+    const res = await ctx.db.mutation.updateUser({
+      where: { email },
+      data: { resetToken, resetTokenExpiry }
+    })
+    console.log(res);
+    return { message: 'Reset!!!!' }
+
+    //email reset token to the user
   }
 };
 
