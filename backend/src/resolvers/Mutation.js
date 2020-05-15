@@ -37,7 +37,7 @@ const Mutations = {
     //3/Delete item
     return ctx.db.mutation.deleteItem({ where }, info)
   },
-  
+
   async signup(parent, args, ctx, info) {
     args.email = args.email.toLowerCase()
 
@@ -63,6 +63,29 @@ const Mutations = {
     })
 
     //return user
+    return user
+  },
+
+  async signin(parent, { email, password }, ctx, info) {
+    //check if there is a user with that email
+    const user = await ctx.db.query.user({ where: {email} })
+    if (!user) {
+      throw new Error(`No user found for ${email}`)
+    }
+    //check if the user's password is correct
+    const valid = await bcrypt.compare(password, user.password)
+
+    if (!valid) {
+      throw new Error('Invalid password!')
+    }
+    //generate jwt for the user
+    const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
+    //set the cookie with the token
+    ctx.response.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 365 //1 year cookie
+    })
+    //return user 
     return user
   }
 };
