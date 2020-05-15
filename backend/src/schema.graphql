@@ -11,6 +11,7 @@ deleteItem(id: ID!): Item
 signup(email: String! password:String! name:String): User!
 signin(email: String! password:String!): User!
 signout: SuccessMessage
+requestReset(email: String!): SuccessMessage
 }
 
 # the items query was modified to take couple of args to filter for pagination
@@ -23,3 +24,12 @@ type Query {
  me: User
 }
 
+
+# the user type is being modified on the yogaServer is b/c there are some fields that should not be sent along to the client
+# check the generated graphql api for difference
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  permissions: [Permission!]!
+}
