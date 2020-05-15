@@ -68,7 +68,7 @@ const Mutations = {
 
   async signin(parent, { email, password }, ctx, info) {
     //check if there is a user with that email
-    const user = await ctx.db.query.user({ where: {email} })
+    const user = await ctx.db.query.user({ where: { email } })
     if (!user) {
       throw new Error(`No user found for ${email}`)
     }
@@ -87,6 +87,11 @@ const Mutations = {
     })
     //return user 
     return user
+  },
+
+  signout(parent, args, ctx, info) {
+    ctx.response.clearCookie('token')
+    return { message: 'Goodbye!' }
   }
 };
 
