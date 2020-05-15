@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import NavStyles from './styles/NavStyles'
 import User from './User'
+import SignOut from './SignOut'
 
 const Nav = () => {
   return (
@@ -22,6 +23,7 @@ const Nav = () => {
               <Link href="/me">
                 <a>Account</a>
               </Link>
+              <SignOut/>
             </React.Fragment>
           )}
           {!me && (

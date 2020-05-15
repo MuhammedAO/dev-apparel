@@ -15,6 +15,8 @@ const NavStyles = styled.ul`
     text-transform: uppercase;
     font-weight: 900;
     font-size: 1em;
+    color: ${props => props.theme.black};
+    font-weight: 800;
     background: none;
     border: 0;
     cursor: pointer;
