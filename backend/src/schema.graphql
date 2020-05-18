@@ -12,6 +12,7 @@ signup(email: String! password:String! name:String): User!
 signin(email: String! password:String!): User!
 signout: SuccessMessage
 requestReset(email: String!): SuccessMessage
+resetPassword(resetToken: String! password:String! confirmPassword:String!): User! 
 }
 
 # the items query was modified to take couple of args to filter for pagination
