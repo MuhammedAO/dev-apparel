@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { randomBytes } = require('crypto')
 const { promisify } = require('util')
+const {transport, makeANiceEmail} = require('../mail')
 
 //Crypto is a module in Node.js which deals with an algorithm that performs data encryption and decryption
 // randomBytes is used to generate a cryptographically well-built artificial random data and the number of bytes to be generated in the written code.
@@ -116,9 +117,17 @@ const Mutations = {
       where: { email },
       data: { resetToken, resetTokenExpiry }
     })
-    return { message: 'Reset!!!!' }
-
     //email reset token to the user
+    const mailRes = await transport.sendMail({
+    from: 'mspeaks910@gmail.com',
+    to: user.email,
+    subject: 'Your password reset token',
+    html: makeANiceEmail(`Your Password reset token is here! 
+    \n\n 
+    <a href="${process.env.FRONTEND_URL}/reset?resetToken=${resetToken}">Click here to reset your password</a>`)
+    })
+    //Return the message
+    return { message: 'Reset!!!!' }
   },
 
   async resetPassword(parent, {password, confirmPassword, resetToken}, ctx, info) {
