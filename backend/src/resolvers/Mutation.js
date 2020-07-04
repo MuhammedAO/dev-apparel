@@ -9,12 +9,24 @@ const {transport, makeANiceEmail} = require('../mail')
 //promisify => runs randomBytes asynchronously(promise based).
 
 const Mutations = {
-  async createItem(parent, args, context, info) {
-    const item = await context.db.mutation.createItem({
+  async createItem(parent, args, ctx, info) {
+    //check if they are logged in
+    if(!ctx.request.userId) {
+      throw new Error('You must be logged in to create an item')
+    }
+    const item = await ctx.db.mutation.createItem(
+      {
       data: {
-        ...args
+        //This is how we create a relationship between the item and the user.
+        user: {
+          connect:{
+          id: ctx.request.userId
+          }
+        },
+        ...args,
       }
     }, info)
+
     return item
   },
 

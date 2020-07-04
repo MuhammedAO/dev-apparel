@@ -19,7 +19,7 @@ resetPassword(resetToken: String! password:String! confirmPassword:String!): Use
 # the where arg is useful for when u want to search for items
 
 type Query {
- items(where: ItemWhereInput orderBy: ItemOrderByInput skip:Int first: Int): [Item]!
+ items(where: ItemWhereInput  skip:Int first: Int): [Item]!
  item(where: ItemWhereUniqueInput!): Item #fetch single item and edit
  itemsConnection(where: ItemWhereInput): ItemConnection! #returns the aggregate for pagination
  me: User

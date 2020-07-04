@@ -12,6 +12,7 @@ const transport = nodemailer.createTransport({
   }
 })
 
+//template for ur email
 const makeANiceEmail = text => `
  <div className="email" 
  style="
