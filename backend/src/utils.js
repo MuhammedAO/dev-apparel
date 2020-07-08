@@ -1,3 +1,6 @@
+
+//check for the permission that a user has and see if it matches the permission that is needed.
+
 function hasPermission(user, permissionsNeeded) {
   const matchedPermissions = user.permissions.filter(permissionTheyHave =>
     permissionsNeeded.includes(permissionTheyHave)

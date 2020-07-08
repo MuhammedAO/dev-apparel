@@ -23,6 +23,7 @@ type Query {
  item(where: ItemWhereUniqueInput!): Item #fetch single item and edit
  itemsConnection(where: ItemWhereInput): ItemConnection! #returns the aggregate for pagination
  me: User
+ users: [User]!
 }
 
 
