@@ -4,6 +4,7 @@ import ErrorMessage from './ErrorMessage'
 import gql from 'graphql-tag'
 import Table from './styles/Table'
 import SickButton from './styles/SickButton'
+import PropTypes from 'prop-types'
 
 const possiblePermissions = [
   'ADMIN',
@@ -43,7 +44,7 @@ const Permissions = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.users.map((user, index) => <User key={index} user={user} />)}
+                  {data.users.map((user, index) => <UserPermissions key={index} user={user} />)}
                 </tbody>
               </Table>
             </div>
@@ -54,7 +55,35 @@ const Permissions = () => {
   )
 }
 
-class User extends React.Component {
+class UserPermissions extends React.Component {
+  static propTypes = {
+    user: PropTypes.shape({
+      name: PropTypes.string,
+      email: PropTypes.string,
+      id: PropTypes.string,
+      permissions: PropTypes.array,
+    }).isRequired
+  }
+
+  state = {
+    permissions: this.props.user.permissions
+  }
+
+  handlePermissionChange = (e) => {
+    const checkbox = e.target
+    //take the copy of current permissions
+    let updatePermissions = [...this.state.permissions]
+
+    if(checkbox.checked){
+      //add it in
+      updatePermissions.push(checkbox.value)
+    }
+     else{
+       updatePermissions = updatePermissions.filter(permission => permission !== checkbox.value)
+     }
+    this.setState({permissions: updatePermissions})
+  }
+
   render() {
     const user = this.props.user
     return (
@@ -64,7 +93,11 @@ class User extends React.Component {
         {possiblePermissions.map((permission, index) => (
           <td key={index}>
             <label htmlFor={`${user.id}-permission-${permission}`}>
-              <input type="checkbox" />
+              <input type="checkbox" 
+              checked={this.state.permissions.includes(permission)}
+              value={permission}
+              onChange={this.handlePermissionChange}
+              />
             </label>
           </td>
         ))}
