@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const { randomBytes } = require('crypto')
 const { promisify } = require('util')
 const {transport, makeANiceEmail} = require('../mail')
+const  { hasPermission } = require ('../utils')
 
 //Crypto is a module in Node.js which deals with an algorithm that performs data encryption and decryption
 // randomBytes is used to generate a cryptographically well-built artificial random data and the number of bytes to be generated in the written code.
@@ -179,6 +180,34 @@ const Mutations = {
   })
   //return new user
   return updatedUser
+  },
+
+  async updatePermissions(parent, args, ctx, info){
+   //check if they are logged in
+   if(!ctx.request.userId){
+     throw new Error('You need to be logged in')
+   }
+
+   //Query the current user
+   const currentUser = await ctx.db.query.user({
+     where: {
+       id: ctx.request.userId
+     }
+   }, info)
+   //check if they have the permission to do this
+   hasPermission(currentUser, ['ADMIN', 'PERMISSIONUPDATE'])
+   //update the permissions
+   //updateUser is from prisma
+   return ctx.db.mutation.updateUser({
+     data: {
+       permissions: {
+         set: args.permissions
+       }
+     },
+     where: {
+       id: args.userId
+     }
+   }, info)
   }
 };
 
