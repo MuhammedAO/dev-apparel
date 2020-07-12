@@ -41,7 +41,9 @@ update = (cache, payload) => {
         {(deleteItem, { error }) => (
           <button onClick={() => {
             if (confirm('Are you sure you want to delete this item?')) {
-              deleteItem()
+              deleteItem().catch(err => {
+                alert(err.message)
+              })
             }
           }}>{this.props.children}</button>
         )}
