@@ -29,7 +29,7 @@ const Pagination = ({ page }) => {
         return (
           <PaginationStyles>
             <Head>
-              <title>Sick Fits | Page {page} of {pages}</title>
+              <title>Dev Apparel | Page {page} of {pages}</title>
             </Head>
             <Link prefetch href={{
               pathname: 'items',

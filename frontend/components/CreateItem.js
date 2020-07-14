@@ -96,7 +96,7 @@ class CreateItem extends Component {
             {/*Error message */}
             <ErrorMessage error={error} />
 
-            <fieldset disabled={loading} aria-busy={loading}>
+            <fieldset >
               <label htmlFor="file">
                 Image
                 <input
