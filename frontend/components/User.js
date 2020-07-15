@@ -9,9 +9,22 @@ query {
     email
     name
     permissions
+    cart{
+      id
+      quantity
+      item{
+        id
+        price
+        image
+        title
+        description
+        
+      }
+    }
  }
 }
 `
+//render props for currently logged in user
 const User = props => {
   return (
     <Query {...props} query={CURRENT_USER_QUERY}>
