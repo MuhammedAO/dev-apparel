@@ -23,6 +23,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy: RELATION)
+  cart: [CartItem!]!
 }
 
 type Item {
@@ -34,4 +35,11 @@ type Item {
   price: Int!
   user: User! #creates a relationship between a user and an item by linking with userId in the item:user
 
+}
+
+type CartItem {
+  id: ID! @id
+  quantity: Int! @default(value: 1)
+  item: Item # relationship to Item
+  user: User! # relationship to User
 }

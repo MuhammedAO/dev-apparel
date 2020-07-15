@@ -14,6 +14,7 @@ signout: SuccessMessage
 requestReset(email: String!): SuccessMessage
 resetPassword(resetToken: String! password:String! confirmPassword:String!): User! 
 updatePermissions(permissions: [Permission], userId: ID!): User
+addToCart(id: ID!) : CartItem
 }
 
 # the items query was modified to take couple of args to filter for pagination
@@ -35,4 +36,5 @@ type User {
   name: String!
   email: String!
   permissions: [Permission!]!
+  cart: [CartItem!]!
 }

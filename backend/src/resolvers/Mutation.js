@@ -33,9 +33,9 @@ const Mutations = {
 
   updateItem(parent, args, ctx, info) {
     // first take a copy of the updates
-    const updates = { ...args };
+    const updates = { ...args }
     // remove the ID from the updates
-    delete updates.id;
+    delete updates.id
     // run the update method
     return ctx.db.mutation.updateItem(
       {
@@ -45,7 +45,7 @@ const Mutations = {
         },
       },
       info
-    );
+    )
   },
 
   async deleteItem(parent, args, ctx, info) {
@@ -53,7 +53,7 @@ const Mutations = {
     //1.find the item
     const item = await ctx.db.query.item({ where }, `{id title user {id}}`)
     //2.check if they own the item/have permission to delete
-    const ownsItem = item.user.id === ctx.request.userId;
+    const ownsItem = item.user.id === ctx.request.userId
     const hasPermissions = ctx.request.user.permissions.some(permission => ['ADMIN', 'ITEMDELETE'].includes(permission))
 
     if(!ownsItem && !hasPermissions) {
@@ -131,7 +131,7 @@ const Mutations = {
     //randomBytes = random && unique token
     const randomBytesPromisified = promisify(randomBytes)
     const resetToken = (await randomBytesPromisified(20)).toString('hex')
-    const resetTokenExpiry = Date.now() + 3600000; //1 hour from now
+    const resetTokenExpiry = Date.now() + 3600000 //1 hour from now
     //save to the user
     const res = await ctx.db.mutation.updateUser({
       where: { email },
@@ -215,9 +215,49 @@ const Mutations = {
        id: args.userId
      }
    }, info)
-  }
-};
+  },
+  async addToCart(parent, args, ctx, info) {
+    // 1. Make sure they are signed in
+    const { userId } = ctx.request
+    if (!userId) {
+      throw new Error('You must be signed in soooon')
+    }
+    // 2. Query the users current cart
+    const [existingCartItem] = await ctx.db.query.cartItems({
+      where: {
+        user: { id: userId },
+        item: { id: args.id },
+      },
+    })
+    // 3. Check if that item is already in their cart and increment by 1 if it is
+    if (existingCartItem) {
+      console.log('This item is already in their cart')
+      return ctx.db.mutation.updateCartItem(
+        {
+          where: { id: existingCartItem.id },
+          data: { quantity: existingCartItem.quantity + 1 },
+        },
+        info
+      )
+    }
+    // 4. If its not, create a fresh CartItem for that user!
+    return ctx.db.mutation.createCartItem(
+      {
+        data: {
+          user: {
+            connect: { id: userId },
+          },
+          item: {
+            connect: { id: args.id },
+          },
+        },
+      },
+      info
+    )
+  },
+  
+}
 
 //the info param allows the query e.g updateItem to know exactly what to return to the client e.g Item!..
 //it will contain the query from the client side to return 'that' 'Item'.
-module.exports = Mutations;
+module.exports = Mutations
