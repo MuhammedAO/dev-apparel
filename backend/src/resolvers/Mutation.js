@@ -255,7 +255,30 @@ const Mutations = {
       info
     )
   },
-  
+  async removeFromCart(parent, args, ctx, info) {
+    // 1. Find the cart item
+    const cartItem = await ctx.db.query.cartItem(
+      {
+        where: {
+          id: args.id,
+        },
+      },
+      `{ id, user { id }}`
+    )
+    // 1.5 Make sure we found an item
+    if (!cartItem) throw new Error('No CartItem Found!')
+    // 2. Make sure they own that cart item
+    if (cartItem.user.id !== ctx.request.userId) {
+      throw new Error('Cheatin huhhhh? Cant\'t delete whats not yours')
+    }
+    // 3. Delete that cart item
+    return ctx.db.mutation.deleteCartItem(
+      {
+        where: { id: args.id },
+      },
+      info
+    )
+  },
 }
 
 //the info param allows the query e.g updateItem to know exactly what to return to the client e.g Item!..
