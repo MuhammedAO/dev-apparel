@@ -5,6 +5,7 @@ import Link from 'next/link'
 import NavStyles from './styles/NavStyles'
 import User from './User'
 import SignOut from './SignOut'
+import CartCount from './CartCount'
 
 const Nav = () => {
   return (
@@ -27,8 +28,11 @@ const Nav = () => {
               </Link>
               <SignOut/>
               <Mutation mutation={TOGGLE_CART_MUTATION}>
-              {(toggleCart) => (
-                <button onClick={toggleCart}>My Cart</button>
+                {(toggleCart) => (
+                  <button onClick={toggleCart}>
+                    My Cart
+                    <CartCount count={me.cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)}></CartCount>
+                  </button>
                 )}
                 </Mutation>
             </React.Fragment>
