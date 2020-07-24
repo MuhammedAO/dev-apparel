@@ -10,6 +10,7 @@ import Supreme from './styles/Supreme'
 import CloseButton from './styles/CloseButton'
 import SickButton from './styles/SickButton'
 import formatMoney from '../lib/formatMoney'
+import TakeMyMoney from './TakeMyMoney'
 
 //local state is data that might not neccesarily live in ur Db 
 //but it's data that needs to live inside ur browser
@@ -48,7 +49,9 @@ const Cart = () => (
         <ul>{me.cart.map(cartItem => <CartItem key={cartItem.id} cartItem={cartItem} />)}</ul>
         <footer>
           <p>{formatMoney(calcTotalPrice(me.cart))}</p>
-          <SickButton>Checkout</SickButton>
+          <TakeMyMoney>
+            <SickButton>Checkout</SickButton>
+          </TakeMyMoney>
         </footer>
       </CartStyles>
     )
