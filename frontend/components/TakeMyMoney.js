@@ -21,7 +21,7 @@ const CREATE_ORDER_MUTATION = gql`
       }
     }
   }
-`;
+`
 
 function totalItems(cart) {
   return cart.reduce((tally, cartItem) => tally + cartItem.quantity, 0)
@@ -29,17 +29,19 @@ function totalItems(cart) {
 
 class TakeMyMoney extends Component {
 
-  onToken = (res, createOrder) => {
+  onToken = async (res, createOrder) => {
     console.log('on token fired')
     console.log(res)
      // manually call the mutation once we have the stripe token
-     createOrder({
-       variables: {
-         token: res.id
-       }
-     }).catch(err => {
-      alert(err.message);
-    });
+     const order = await createOrder({
+      variables: {
+        token: res.id,
+      },
+    }).catch(err => {
+      alert(err.message)
+    })
+    console.log(order)
+
   }
 
   render() {
@@ -55,7 +57,7 @@ class TakeMyMoney extends Component {
                 amount={calcTotalPrice(me.cart)}
                 name="Dev Apparel"
                 description={`Order of ${totalItems(me.cart)} items!`}
-                image={me.cart[0].item && me.cart[0].item.image}
+                image={me.cart.length && me.cart[0].item && me.cart[0].item.image}
                 stripeKey="pk_test_51H7gMBKtrUh0VzhGCo7oop53HmENa4BRRlMm1cpPaAB3cenYv106HYRbMRWEc3Cg3LwtDfYc2iooavhqsJ5ML2Is00J6PPDnik"
                 currency="USD"
                 email={me.email}
