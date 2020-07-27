@@ -28,6 +28,7 @@ type Query {
  itemsConnection(where: ItemWhereInput): ItemConnection! #returns the aggregate for pagination
  me: User
  users: [User]!
+ order(id: ID!): Order
 }
 
 
