@@ -35,11 +35,15 @@
     "react-stripe-checkout": "^2.6.3",
     "react-transition-group": "^2.5.0",
     "styled-components": "^3.4.9",
-    "waait": "^1.0.2"
+    "waait": "^1.0.2",
+    "win-node-env": "^0.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
     "babel-jest": "^23.6.0",
     "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-styled-components": "^1.11.1",
     "casual": "^1.5.19",
     "enzyme-to-json": "^3.3.4",
     "graphql-tools": "^4.0.0",
