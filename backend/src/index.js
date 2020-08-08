@@ -14,6 +14,8 @@ server.express.use(cookieParser())
 //decode the jwt to get the userId on each request
 //this means that if we ever need to figure out who the current user is,
 //we can query the Db having already known the userId
+
+//start
 server.express.use((req, res, next) => {
   const { token } = req.cookies
 
